@@ -63,3 +63,16 @@ GROUP BY
     p.FirstName
 ORDER BY
     EmployeeCount DESC;
+//SQL, P1.5
+
+SELECT TOP 10
+    v.Name AS VendorName,
+    MAX(pv.StandardPrice) AS MaxProductPrice
+FROM
+    Purchasing.Vendor v
+JOIN Purchasing.ProductVendor pv
+    ON v.BusinessEntityID = pv.BusinessEntityID
+GROUP BY
+    v.Name
+ORDER BY
+    MaxProductPrice DESC;
