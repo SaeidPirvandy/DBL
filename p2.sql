@@ -162,3 +162,19 @@ FROM
 //Execution
 
 SELECT * FROM FormattedAddresses;
+//SQL, P2.8
+
+CREATE VIEW SpecialOfferTax
+AS
+SELECT TOP 100 PERCENT
+    SpecialOfferID,
+    ISNULL(MaxQty, 20) * DiscountPct AS Tax
+FROM
+    Sales.SpecialOffer
+ORDER BY
+    Tax DESC;
+
+
+//Execution
+
+SELECT * FROM SpecialOfferTax;
