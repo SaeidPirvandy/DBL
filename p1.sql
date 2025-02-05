@@ -49,3 +49,17 @@ JOIN Sales.SalesOrderDetail sod
     ON soh.SalesOrderID = sod.SalesOrderID
 GROUP BY
     soh.SalesOrderID, soh.OrderDate;
+//SQL, P1.4
+
+
+SELECT
+    p.FirstName,
+    COUNT(*) AS EmployeeCount
+FROM
+    HumanResources.Employee e
+JOIN Person.Person p
+    ON e.BusinessEntityID = p.BusinessEntityID
+GROUP BY
+    p.FirstName
+ORDER BY
+    EmployeeCount DESC;
