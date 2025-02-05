@@ -137,3 +137,16 @@ EXEC GetOrdersByDateAndAmount
     @StartDate = '2011-06-01',
     @EndDate = '2011-06-30',
     @MinTotalDue = 1000; -- Example: $1,000 minimum
+//SQL, P2.6
+
+CREATE VIEW ProductsWithNullColor
+AS
+SELECT
+    ProductID,
+    Name,
+    ProductNumber, -- Optional: Include other columns
+    Color
+FROM
+    Production.Product
+WHERE
+    Color IS NULL;
