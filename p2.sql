@@ -178,3 +178,17 @@ ORDER BY
 //Execution
 
 SELECT * FROM SpecialOfferTax;
+//SQL, P2.9
+
+CREATE VIEW PersonNameCodes
+AS
+SELECT
+    BusinessEntityID,
+    LEFT(FirstName, 5) + '_' + LEFT(LastName, 5) AS NameCode
+FROM
+    Person.Person;
+
+
+//Execution
+
+SELECT * FROM PersonNameCodes;
