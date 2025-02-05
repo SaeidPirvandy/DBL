@@ -77,3 +77,63 @@ END;
     UPDATE Person.Person
     SET ModifiedDate = GETDATE() -- Sets to current date/time
     WHERE BusinessEntityID = 1;
+//SQL, P2.5
+
+CREATE OR ALTER PROCEDURE GetOrdersByDateRange
+    @StartDate DATETIME,
+    @EndDate DATETIME
+AS
+BEGIN
+    SELECT
+        SalesOrderID,
+        OrderDate,
+        TotalDue
+    FROM
+        Sales.SalesOrderHeader
+    WHERE
+        OrderDate BETWEEN @StartDate AND @EndDate
+    ORDER BY
+        OrderDate;
+END;
+
+//Execution
+CREATE OR ALTER PROCEDURE GetOrdersByDateAndAmount
+    @StartDate DATETIME,
+    @EndDate DATETIME,
+    @MinTotalDue MONEY
+AS
+BEGIN
+    -- Create a temporary table to hold results from Part 1's SP
+    CREATE TABLE #TempOrders (
+        SalesOrderID INT,
+        OrderDate DATETIME,
+        TotalDue MONEY
+    );
+
+    -- Insert results from the first SP into the temp table
+    INSERT INTO #TempOrders
+    EXEC GetOrdersByDateRange @StartDate, @EndDate;
+
+    -- Filter by minimum TotalDue
+    SELECT
+        SalesOrderID,
+        OrderDate,
+        TotalDue
+    FROM
+        #TempOrders
+    WHERE
+        TotalDue >= @MinTotalDue
+    ORDER BY
+        TotalDue DESC; -- Optional: Show highest amounts first
+
+    -- Cleanup (temp tables auto-delete when the SP finishes)
+END;
+
+
+
+//Execution
+
+EXEC GetOrdersByDateAndAmount
+    @StartDate = '2011-06-01',
+    @EndDate = '2011-06-30',
+    @MinTotalDue = 1000; -- Example: $1,000 minimum
