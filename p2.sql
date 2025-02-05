@@ -33,3 +33,16 @@ WHERE
 //Execution
 
    SELECT * FROM ProductsWithDetails;
+//SQL, P2.3
+CREATE OR ALTER VIEW ProductsWithDetails
+AS
+SELECT
+    ProductID,
+    Name,
+    Color -- Added Color to the output
+FROM
+    Production.Product
+WHERE
+    Style IS NOT NULL
+    OR Size IS NOT NULL
+    OR Color IS NOT NULL;
