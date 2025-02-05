@@ -192,3 +192,37 @@ FROM
 //Execution
 
 SELECT * FROM PersonNameCodes;
+//SQL, P2.10
+
+AS
+BEGIN
+    SELECT
+        SalesOrderID,
+        OrderDate,
+        ShipDate,
+        DATEDIFF(DAY, OrderDate, ShipDate) AS DaysDifference
+    FROM
+        Sales.SalesOrderHeader
+    WHERE
+        DATEDIFF(DAY, OrderDate, ShipDate) > @DiffDays
+    ORDER BY
+        DaysDifference DESC;
+END;
+
+
+//Execution
+
+AS
+BEGIN
+    SELECT
+        SalesOrderID,
+        OrderDate,
+        ShipDate,
+        DATEDIFF(DAY, OrderDate, ShipDate) AS DaysDifference
+    FROM
+        Sales.SalesOrderHeader
+    WHERE
+        DATEDIFF(DAY, OrderDate, ShipDate) > @DiffDays
+    ORDER BY
+        DaysDifference DESC;
+END;
