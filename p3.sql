@@ -34,3 +34,28 @@ FROM
     Sales.SalesOrderHeader soh;
 
 //Execution
+//SQL, P3.3
+
+-- Employee first name counts (no JOIN/GROUP BY)
+SELECT DISTINCT
+    p.FirstName,
+    (SELECT COUNT(*)
+     FROM Person.Person p2
+     WHERE p2.FirstName = p.FirstName
+       AND EXISTS (
+           SELECT 1
+           FROM HumanResources.Employee e
+           WHERE e.BusinessEntityID = p2.BusinessEntityID
+       )) AS EmployeeCount
+FROM
+    Person.Person p
+WHERE
+    EXISTS (
+        SELECT 1
+        FROM HumanResources.Employee e
+        WHERE e.BusinessEntityID = p.BusinessEntityID
+    )
+ORDER BY
+    EmployeeCount DESC;
+
+//Execution
