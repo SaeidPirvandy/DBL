@@ -59,3 +59,23 @@ ORDER BY
     EmployeeCount DESC;
 
 //Execution
+//SQL, P3.4
+
+
+
+-- Top 10 vendors by product price (no JOIN/GROUP BY)
+SELECT TOP 10
+    v.Name AS VendorName,
+    (SELECT MAX(pv.StandardPrice)
+     FROM Purchasing.ProductVendor pv
+     WHERE pv.BusinessEntityID = v.BusinessEntityID) AS MaxProductPrice
+FROM
+    Purchasing.Vendor v
+WHERE
+    EXISTS (
+        SELECT 1
+        FROM Purchasing.ProductVendor pv
+        WHERE pv.BusinessEntityID = v.BusinessEntityID
+    )
+ORDER BY
+    MaxProductPrice DESC;
