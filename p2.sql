@@ -226,3 +226,17 @@ BEGIN
     ORDER BY
         DaysDifference DESC;
 END;
+//SQL, P2.11
+
+CREATE VIEW SalesOrderWithRandom
+AS
+SELECT
+    SalesOrderID,
+    ROUND(SubTotal, 1) AS RoundedSubTotal,
+    FLOOR(RAND(CHECKSUM(NEWID())) * 101) + 100 AS RandomNumber
+FROM
+    Sales.SalesOrderHeader;
+
+//Execution
+
+    SELECT * FROM SalesOrderWithRandom;
