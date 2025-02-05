@@ -150,3 +150,15 @@ FROM
     Production.Product
 WHERE
     Color IS NULL;
+//SQL, P2.7
+
+CREATE VIEW FormattedAddresses
+AS
+SELECT
+    CONCAT('[', AddressID, '] ', AddressLine1, ' [', City, ': ', PostalCode, ']') AS FormattedAddress
+FROM
+    Person.Address;
+
+//Execution
+
+SELECT * FROM FormattedAddresses;
