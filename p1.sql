@@ -23,3 +23,17 @@ GROUP BY
     a.City
 ORDER BY
     PeopleCount DESC;
+
+
+//SQL, P1.3
+
+SELECT
+    soh.SalesOrderID AS OrderNumber,
+    soh.OrderDate,
+    COUNT(sod.SalesOrderDetailID) AS ItemCount
+FROM
+    Sales.SalesOrderHeader soh
+JOIN Sales.SalesOrderDetail sod
+    ON soh.SalesOrderID = sod.SalesOrderID
+GROUP BY
+    soh.SalesOrderID, soh.OrderDate;
