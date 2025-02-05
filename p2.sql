@@ -240,3 +240,49 @@ FROM
 //Execution
 
     SELECT * FROM SalesOrderWithRandom;
+//SQL, P2.12
+//PART 1
+
+CREATE VIEW SalesOrderDetailCategories
+AS
+SELECT
+    SalesOrderDetailID,
+    SalesOrderID,
+    OrderQty,
+    CASE
+        WHEN OrderQty < 10 THEN 'Less than 10'
+        WHEN OrderQty BETWEEN 10 AND 30 THEN 'Between 10 and 30'
+        ELSE 'Greater than 30'
+    END AS OrderQtyCategory
+FROM
+    Sales.SalesOrderDetail;
+
+//PART 2
+
+
+    CREATE OR ALTER PROCEDURE GetOrderQtyCategoryStats
+    @StartDate DATETIME,
+    @EndDate DATETIME
+AS
+BEGIN
+    SELECT
+        SODC.OrderQtyCategory,
+        COUNT(*) AS RecordCount
+    FROM
+        SalesOrderDetailCategories SODC
+    INNER JOIN
+        Sales.SalesOrderHeader SOH ON SODC.SalesOrderID = SOH.SalesOrderID
+    WHERE
+        SOH.OrderDate BETWEEN @StartDate AND @EndDate
+    GROUP BY
+        SODC.OrderQtyCategory
+    ORDER BY
+        RecordCount DESC;
+END;
+
+
+//Execution
+
+EXEC GetOrderQtyCategoryStats
+    @StartDate = '2011-06-01',
+    @EndDate = '2011-06-30';
