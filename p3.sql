@@ -20,3 +20,17 @@ FROM
     Person.Address a
 ORDER BY
     PeopleCount DESC;
+//SQL, P3.2
+
+
+-- Order details with item count (no JOIN/GROUP BY)
+SELECT
+    soh.SalesOrderID AS OrderNumber,
+    soh.OrderDate,
+    (SELECT COUNT(*)
+     FROM Sales.SalesOrderDetail sod
+     WHERE sod.SalesOrderID = soh.SalesOrderID) AS ItemCount
+FROM
+    Sales.SalesOrderHeader soh;
+
+//Execution
